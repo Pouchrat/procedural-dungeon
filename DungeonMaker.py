@@ -26,10 +26,15 @@ class DungeonMaker:
         self.facing = rand.choice(self.facingArray)
         
         # CREATE ROOM MAKER
+        self.wr = RM.RoomMaker([self.roomSize,self.roomSize],doorCoord=[0,0,0,0],
+            debug=debug) # Wall Room
         self.rm = RM.RoomMaker([self.roomSize,self.roomSize],debug = debug)
 
         # SET WALL CHAR
         self.wall = wall
+        
+        self.wr.createWallRoom
+        self.wallRoom = self.wr.roomArray
 
 
     def play(self):
@@ -43,12 +48,10 @@ class DungeonMaker:
     
     def createArray(self):
         self.dungeonArray = []
-        self.rm.createWallRoom()
-        wallRoom = self.rm.roomArray
         for row in range(self.dungeonSize):
             self.dungeonArray.append([])
             for col in range(self.dungeonSize):
-                self.dungeonArray[row].append(wallRoom)
+                self.dungeonArray[row].append(self.wallRoom)
 
     def displayDungeon(self):
         dungeonDisplay = ""
