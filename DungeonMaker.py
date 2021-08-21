@@ -85,22 +85,15 @@ class DungeonMaker:
         self.chooseFacing()
         tunnelLen = self.chooseTunnelLen()
 
-        doorCoords = [0,0,0,0]
-
-        if self.facing[0] > 0:
-            doorCoords[1] = 1
-        if self.facing[0] < 0:
-            doorCoords[3] = 1
-        if self.facing[1] > 0:
-            doorCoords[0] = 1
-        if self.facing[1] < 0:
-            doorCoords[2] = 1
-        
-        self.rm.doorCoord = doorCoords
+        self.rm.doorCoord = [0,0,0,0]
 
         if self.facing[0] != 0:
 
             for i in range(0,tunnelLen):
+
+                self.rm.doorCoord[0] = 1
+                self.rm.doorCoord[2] = 1
+
                 self.rm.play()
                 newRoom = self.rm.roomArray
             
@@ -121,6 +114,9 @@ class DungeonMaker:
                     self.dungeonArray[self.cur[0]][self.cur[1]] = newRoom
                     
         if self.facing[1] != 0:
+
+            self.rm.doorCoord[1] = 1
+            self.rm.doorCoord[3] = 1
 
 
             for i in range(0,tunnelLen):
