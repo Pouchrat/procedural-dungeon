@@ -94,6 +94,12 @@ class DungeonMaker:
                 self.rm.doorCoord[0] = 1
                 self.rm.doorCoord[2] = 1
 
+                if i == tunnelLen - 1:
+                    if self.facing[0] > 0:
+                        self.rm.doorCoord[0] = 0
+                    if self.facing[0] < 0:
+                        self.rm.doorCoord[2] = 0
+
                 self.rm.play()
                 newRoom = self.rm.roomArray
             
@@ -120,6 +126,11 @@ class DungeonMaker:
 
 
             for i in range(0,tunnelLen):
+                if i == tunnelLen-1:
+                    if self.facing[1] > 0:
+                        self.rm.doorCoord[1] = 0
+                    if self.facing[1] < 0:
+                        self.rm.doorCoord[3] = 0
                 self.rm.play()
                 newRoom = self.rm.roomArray
             
