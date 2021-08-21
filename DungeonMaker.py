@@ -26,15 +26,13 @@ class DungeonMaker:
         self.facing = rand.choice(self.facingArray)
         
         # CREATE ROOM MAKER
-        self.wr = RM.RoomMaker([self.roomSize,self.roomSize],doorCoord=[0,0,0,0],
-            debug=debug) # Wall Room
         self.rm = RM.RoomMaker([self.roomSize,self.roomSize],debug = debug)
 
         # SET WALL CHAR
         self.wall = wall
         
-        self.wr.createWallRoom
-        self.wallRoom = self.wr.roomArray
+        self.rm.createWallRoom()
+        self.wallRoom = self.rm.room
 
 
     def play(self):
@@ -59,7 +57,7 @@ class DungeonMaker:
             for k in range(0,self.roomSize):
                 for j in range(0,self.dungeonSize):
                     for i in range(0,self.roomSize):
-                        dungeonDisplay += str(self.dungeonArray[j][m][k][i])
+                        dungeonDisplay += str(self.dungeonArray[j][m].roomArray[k][i])
                 if k < self.roomSize - 1:
                     dungeonDisplay += "\n"
             if m < self.dungeonSize - 1:
@@ -103,7 +101,7 @@ class DungeonMaker:
                         self.rm.doorCoord[2] = 0
 
                 self.rm.play()
-                newRoom = self.rm.roomArray
+                newRoom = self.rm.room
             
                 if (self.cur[1] + self.facing[0] < self.dungeonSize and
                     self.cur[1] + self.facing[0] >= 0):
@@ -134,7 +132,7 @@ class DungeonMaker:
                     if self.facing[1] < 0:
                         self.rm.doorCoord[3] = 0
                 self.rm.play()
-                newRoom = self.rm.roomArray
+                newRoom = self.rm.room
             
                 if (self.cur[0] + self.facing[1] < self.dungeonSize and
                     self.cur[0] + self.facing[1] >= 0):
