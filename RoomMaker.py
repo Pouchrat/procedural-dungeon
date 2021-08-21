@@ -1,5 +1,4 @@
 import random as rand
-import math
 
 class RoomMaker:
     def __init__(self, roomSize = [10,25], doorCoord = [1,1,1,1], # [N,E,S,W]

@@ -1,5 +1,3 @@
-import random as rand
-import RoomMaker as RM
 import DungeonMaker as DM
 
 

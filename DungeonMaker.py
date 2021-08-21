@@ -1,5 +1,4 @@
 import random as rand
-import math
 import RoomMaker as RM
 
 class DungeonMaker:
