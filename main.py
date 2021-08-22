@@ -7,3 +7,9 @@ def play(debug = False):
     dungeonOut = open("dungeon.txt","w")
     dungeonOut.write(dm.displayDungeon())
     dungeonOut.close()
+
+def main():
+    play()
+
+if __name__ == "__main__":
+    main()
