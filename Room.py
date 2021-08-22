@@ -16,7 +16,8 @@ class Room:
         self.doorNum = doorNum
 
         self.wall = "#"
-        self.empty = "="
+        self.empty = "+"
+        self.floor = " "
         self.door = " "
         self.spider = "x"
         self.rat = "o"
@@ -48,7 +49,7 @@ class Room:
                     j == 0 or j == self.roomSize[1] - 1):
                     self.roomArray[i].append(self.wall)
                 else:
-                    self.roomArray[i].append(self.empty)
+                    self.roomArray[i].append(self.floor)
 
     def addDoors(self,doorCoord = None):
         if doorCoord == None:
@@ -81,7 +82,9 @@ class Room:
             if self.roomSize[0] % 2 == 0:
                 self.roomArray[doorPosY-1][0] = self.door
 
-    def createWallRoom(self):
+    def createFilledRoom(self,fillType = None):
+        if fillType == None:
+            fillType = self.empty
         rows = self.roomSize[0]
         cols = self.roomSize[1]
 
@@ -93,7 +96,7 @@ class Room:
                 if self.debug:
                     self.roomArray[i].append(str(i+1) + "x" + str(j+1))
                 else:
-                    self.roomArray[i].append(self.wall)
+                    self.roomArray[i].append(fillType)
                 
 
     def displayRoom(self):
@@ -116,7 +119,7 @@ class Room:
         itemCount = rand.randint(minItem,maxItem)
 
         while (itemCount > 0):
-            if (self.roomArray[row][col] == self.empty):
+            if (self.roomArray[row][col] == self.floor):
                 itemCount -= 1
                 self.roomArray[row][col] = item
             else:

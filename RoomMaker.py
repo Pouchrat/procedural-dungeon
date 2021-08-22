@@ -44,9 +44,9 @@ class RoomMaker:
             return True
         else: return False
 
-    def createWallRoom(self):
+    def createFilledRoom(self,fillType = None):
         self.room = r.Room(self.roomSize,doorCoord = [0,0,0,0],debug=self.debug)
-        self.room.createWallRoom()
+        self.room.createFilledRoom(fillType)
                 
 
     def displayRoom(self):

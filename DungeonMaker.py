@@ -31,8 +31,8 @@ class DungeonMaker:
         # SET WALL CHAR
         self.wall = wall
         
-        self.rm.createWallRoom()
-        self.wallRoom = self.rm.room
+        self.rm.createFilledRoom()
+        self.filledRoom = self.rm.room
 
 
     def play(self):
@@ -49,7 +49,7 @@ class DungeonMaker:
         for row in range(self.dungeonSize):
             self.dungeonArray.append([])
             for col in range(self.dungeonSize):
-                self.dungeonArray[row].append(self.wallRoom)
+                self.dungeonArray[row].append(self.filledRoom)
 
     def displayDungeon(self):
         dungeonDisplay = ""
@@ -85,16 +85,16 @@ class DungeonMaker:
         nearby = [0,0,0,0]
 
         if self.cur[0] - 1 >= 0:
-            if self.dungeonArray[self.cur[0] - 1][self.cur[1]] != self.wallRoom:
+            if self.dungeonArray[self.cur[0] - 1][self.cur[1]] != self.filledRoom:
                 nearby[3] = 1
         if self.cur[0] + 1 < self.dungeonSize:
-            if self.dungeonArray[self.cur[0] + 1][self.cur[1]] != self.wallRoom:
+            if self.dungeonArray[self.cur[0] + 1][self.cur[1]] != self.filledRoom:
                 nearby[1] = 1
         if self.cur[1] - 1 >= 0:
-            if self.dungeonArray[self.cur[0]][self.cur[1] - 1] != self.wallRoom:
+            if self.dungeonArray[self.cur[0]][self.cur[1] - 1] != self.filledRoom:
                 nearby[0] = 1
         if self.cur[1] + 1 < self.dungeonSize:
-            if self.dungeonArray[self.cur[0]][self.cur[1] + 1] != self.wallRoom:
+            if self.dungeonArray[self.cur[0]][self.cur[1] + 1] != self.filledRoom:
                 nearby[2] = 1
 
         return nearby
