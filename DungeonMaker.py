@@ -110,8 +110,7 @@ class DungeonMaker:
         if nearby[3] == 1:
             self.dungeonArray[self.cur[0] - 1][self.cur[1]].addDoors([0,1,0,0])
     
-    
-    # TODO: Combine for-loops
+
     def digTunnel(self):
         self.chooseFacing()
         tunnelLen = self.chooseTunnelLen()
@@ -119,74 +118,41 @@ class DungeonMaker:
         self.rm.doorCoord = [0,0,0,0]
 
         if self.facing[0] != 0:
-
-            for i in range(0,tunnelLen):
-
-                self.rm.doorCoord[0] = 1
-                self.rm.doorCoord[2] = 1
-
-                if i == tunnelLen - 1:
-                    if self.facing[0] > 0:
-                        self.rm.doorCoord[0] = 0
-                    if self.facing[0] < 0:
-                        self.rm.doorCoord[2] = 0
-
-                self.rm.createRoom()
-                self.rm.populateRoom()
-                newRoom = self.rm.room
-            
-                if (self.cur[1] + self.facing[0] < self.dungeonSize and
-                    self.cur[1] + self.facing[0] >= 0):
-
-                    self.cur[1] = self.cur[1] + self.facing[0]
-                    self.dungeonArray[self.cur[0]][self.cur[1]] = newRoom
-                    
-                elif (self.cur[1] + self.facing[0] >= self.dungeonSize):
-
-                    self.cur[1] = 0
-                    self.dungeonArray[self.cur[0]][self.cur[1]] = newRoom
-                    
-                else:
-                    
-                    self.cur[1] = self.dungeonSize - 1
-                    self.dungeonArray[self.cur[0]][self.cur[1]] = newRoom
-                
-                self.addDoorsNearby()
-                self.dungeonArray[self.cur[0]][self.cur[1]].addDoors(self.detectNearby())
-                    
+            faceInd = 0
+            curInd = 1
+            coordInd = 0
         if self.facing[1] != 0:
+            faceInd = 1
+            curInd = 0
+            coordInd = 1
+        
+        for i in range(0, tunnelLen):
+            self.rm.doorCoord[coordInd] = 1
+            self.rm.doorCoord[coordInd + 2] = 1
 
-            self.rm.doorCoord[1] = 1
-            self.rm.doorCoord[3] = 1
+            self.rm.createRoom()
+            self.rm.populateRoom()
+            newRoom = self.rm.room
 
+            if (self.cur[curInd] + self.facing[faceInd] < self.dungeonSize and
+                self.cur[curInd] + self.facing[faceInd] >= 0):
 
-            for i in range(0,tunnelLen):
-                if i == tunnelLen-1:
-                    if self.facing[1] > 0:
-                        self.rm.doorCoord[1] = 0
-                    if self.facing[1] < 0:
-                        self.rm.doorCoord[3] = 0
-                self.rm.createRoom()
-                self.rm.populateRoom()
-                newRoom = self.rm.room
-            
-                if (self.cur[0] + self.facing[1] < self.dungeonSize and
-                    self.cur[0] + self.facing[1] >= 0):
-
-                    self.cur[0] = self.cur[0] + self.facing[1]
-                    self.dungeonArray[self.cur[0]][self.cur[1]] = newRoom
-
-                elif (self.cur[0] + self.facing[1] >= self.dungeonSize):
-
-                    self.cur[0] = 0
-                    self.dungeonArray[self.cur[0]][self.cur[1]] = newRoom
+                self.cur[curInd] = self.cur[curInd] + self.facing[faceInd]
+                self.dungeonArray[self.cur[0]][self.cur[1]] = newRoom
                     
-                else:
-                    
-                    self.cur[0] = self.dungeonSize - 1
-                    self.dungeonArray[self.cur[0]][self.cur[1]] = newRoom
+            elif (self.cur[curInd] + self.facing[faceInd] >= self.dungeonSize):
+
+                self.cur[curInd] = 0
+                self.dungeonArray[self.cur[0]][self.cur[1]] = newRoom
                 
-                self.addDoorsNearby()
-                self.dungeonArray[self.cur[0]][self.cur[1]].addDoors(self.detectNearby())
+            else:
+                
+                self.cur[curInd] = self.dungeonSize - 1
+                self.dungeonArray[self.cur[0]][self.cur[1]] = newRoom
+            
+            self.addDoorsNearby()
+            self.dungeonArray[self.cur[0]][self.cur[1]].addDoors(self.detectNearby())
 
-    
+                
+
+       
