@@ -80,6 +80,35 @@ class DungeonMaker:
 
     def chooseTunnelLen(self):
         return rand.randrange(1,self.maxTunnelLen+1)
+
+    def detectNearby(self):
+        nearby = [0,0,0,0]
+
+        if self.cur[0] - 1 >= 0:
+            if self.dungeonArray[self.cur[0] - 1][self.cur[1]] != self.wallRoom:
+                nearby[3] = 1
+        if self.cur[0] + 1 < self.dungeonSize:
+            if self.dungeonArray[self.cur[0] + 1][self.cur[1]] != self.wallRoom:
+                nearby[1] = 1
+        if self.cur[1] - 1 >= 0:
+            if self.dungeonArray[self.cur[0]][self.cur[1] - 1] != self.wallRoom:
+                nearby[0] = 1
+        if self.cur[1] + 1 < self.dungeonSize:
+            if self.dungeonArray[self.cur[0]][self.cur[1] + 1] != self.wallRoom:
+                nearby[2] = 1
+
+        return nearby
+    
+    def addDoorsNearby(self):
+        nearby = self.detectNearby()
+        if nearby[0] == 1:
+            self.dungeonArray[self.cur[0]][self.cur[1] - 1].addDoors([0,0,1,0])
+        if nearby[1] == 1:
+            self.dungeonArray[self.cur[0] + 1][self.cur[1]].addDoors([0,0,0,1])
+        if nearby[2] == 1:
+            self.dungeonArray[self.cur[0]][self.cur[1] + 1].addDoors([1,0,0,0])
+        if nearby[3] == 1:
+            self.dungeonArray[self.cur[0] - 1][self.cur[1]].addDoors([0,1,0,0])
     
     def digTunnel(self): # WIP
         self.chooseFacing()
@@ -100,7 +129,8 @@ class DungeonMaker:
                     if self.facing[0] < 0:
                         self.rm.doorCoord[2] = 0
 
-                self.rm.play()
+                self.rm.createRoom()
+                self.rm.populateRoom()
                 newRoom = self.rm.room
             
                 if (self.cur[1] + self.facing[0] < self.dungeonSize and
@@ -118,6 +148,9 @@ class DungeonMaker:
                     
                     self.cur[1] = self.dungeonSize - 1
                     self.dungeonArray[self.cur[0]][self.cur[1]] = newRoom
+                
+                self.addDoorsNearby()
+                self.dungeonArray[self.cur[0]][self.cur[1]].addDoors(self.detectNearby())
                     
         if self.facing[1] != 0:
 
@@ -131,7 +164,8 @@ class DungeonMaker:
                         self.rm.doorCoord[1] = 0
                     if self.facing[1] < 0:
                         self.rm.doorCoord[3] = 0
-                self.rm.play()
+                self.rm.createRoom()
+                self.rm.populateRoom()
                 newRoom = self.rm.room
             
                 if (self.cur[0] + self.facing[1] < self.dungeonSize and
@@ -149,5 +183,8 @@ class DungeonMaker:
                     
                     self.cur[0] = self.dungeonSize - 1
                     self.dungeonArray[self.cur[0]][self.cur[1]] = newRoom
+                
+                self.addDoorsNearby()
+                self.dungeonArray[self.cur[0]][self.cur[1]].addDoors(self.detectNearby())
 
     
