@@ -110,7 +110,9 @@ class DungeonMaker:
         if nearby[3] == 1:
             self.dungeonArray[self.cur[0] - 1][self.cur[1]].addDoors([0,1,0,0])
     
-    def digTunnel(self): # WIP
+    
+    # TODO: Combine for-loops
+    def digTunnel(self):
         self.chooseFacing()
         tunnelLen = self.chooseTunnelLen()
 
